@@ -8,26 +8,26 @@
 
 
 
+app.get("/getUserData",(req,res)=>{
+   try{
+    throw newError("dhbjsb");
+    res.send("user send the data")
+   }catch(err){
+    res.status(500).send("some error");
+   }
+})
+app.use("/",(err,req,res,next)=>{
+  if(err){
+    res.status(500).send("something went wrong");
+  }
+})
 
-  // app.use("/admin",(req,res,next)=>{
-  //   console.log("admin auth is getting check");
-  //   const token = "xyz";
-  //   const auth = token==="xyz";
-  //   if(!auth){
-  //   res.status(401).send("unautherzied");
-    
-      
-  //   }
-  //   else{
-  //     next();
-  //   }
-    
-  // })
-  app.use("/admin",adminAuth);
+  // app.use("/admin",adminAuth);
   
-   app.get("/admin/getuser",(req,res)=>{
-    res.send("all data is come")
-   });
-   app.get("/admin/delete",(req,res)=>{
-    res.send("delete the admin");
-   });
+  //  app.get("/admin/getuser",(req,res)=>{
+  //   res.send("all data is come")
+  //  });
+  //  app.get("/admin/delete",(req,res)=>{
+  //   res.send("delete the admin");
+  //  });
+  //how to handle the error by try catch and use trycatch
