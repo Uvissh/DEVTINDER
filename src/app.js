@@ -4,20 +4,20 @@
  const User = require("./models/user");
 
 
-
+ app.use(express.json());  //we use middleware to convert json into js object
  app.post("/signup",async(req,res)=>{
- const  userObj = ({
-  firstName:"vishal",
-  lastName:"Bhateria",
-  emailId:"vishalbhateria124@gmail.com",
-  password:12334,
-  age:19,
-  gender:"male"
+ 
 
- })
+
+
+  
+
+
 
  //make the user
- const user = new User(userObj);//herre we made the new instance of the class or new object
+ const user = new User(req.body);
+//  console.log(req.body);
+ //by requesting the body we get all the data that has been we dynammilcally write int postmon
  try{
   await user.save();
   res.send("User Added successfully");
