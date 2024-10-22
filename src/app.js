@@ -28,6 +28,30 @@
   
  }
 })
+ app.get("/feed",async(req,res)=>{
+  try{
+    
+    const user = await User.find({});
+    res.send(user);
+
+  }catch(err){
+    console.log("Something went wrong",err.message);
+    
+  }
+ })
+ app.get("/user",async(req,res)=>{
+  try{
+    const userEmail = req.body.emailId;
+    const user = await User.findOne({emailId:userEmail});
+    res.send(user);
+
+
+  }catch(err){
+    console.log("something went wrong",err.message);
+    
+  }
+  
+ })
 
  
 
