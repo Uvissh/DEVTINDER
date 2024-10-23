@@ -53,8 +53,48 @@
   
  })
 
- 
 
+ app.delete("/user",async(req,res)=>{
+  const userId = req.body.userId;
+  try{
+    const user = await User.findByIdAndDelete(userId);
+    //and also cosnt user = awiat .findByIdAndDelete({_id:userId})
+
+    res.send("User is delete successfully");
+  }catch(err){
+    res.status(400).send("something went wrong")
+  }
+ })
+
+ 
+ app.patch("/user",async(req,res)=>{
+  const userId = req.body.userId;
+  const data = req.body;
+  try{
+    const user = await User.findByIdAndUpdate({_id:userId},data,{
+      returnDocument:"after",
+      runValidators:"true",
+    });
+    console.log(user)
+    res.send("user update succesfully");
+
+  }catch(err){
+    res.status(400).send("something went wrong");
+  }
+ })
+
+ app.patch("/user",async(req,res)=>{
+  const emailId = req.body.emailId;
+  const data = req.body;
+  try{
+    const user = await User.findByIdAndUpdate(emailId,data);
+    console.log(user)
+    res.send("user update succesfully");
+
+  }catch(err){
+    res.status(400).send("something went wrong");
+  }
+ })
 
  connectDB()
  .then(()=>{
