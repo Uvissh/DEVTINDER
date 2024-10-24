@@ -2,6 +2,7 @@
   const connectDB=require("./config/Database") 
  const app = express();//new application of express
  const User = require("./models/user");
+ 
 
 
  app.use(express.json());  //we use middleware to convert json into js object
@@ -24,6 +25,7 @@
 
  }catch(err){
   console.log("their is error in the user ",err.message);
+  res.status(400).status(err.message)
 
   
  }
@@ -48,6 +50,7 @@
 
   }catch(err){
     console.log("something went wrong",err.message);
+    res.status(400).status(err.message)
     
   }
   
@@ -67,34 +70,40 @@
  })
 
  
- app.patch("/user",async(req,res)=>{
-  const userId = req.body.userId;
+ app.patch("/user/:userId",async(req,res)=>{
+  const userId = req.params?.userId;
   const data = req.body;
+
   try{
+
+    // const Allowed_Updates =["photoUrl","skills","about","password"];
+    // const isUpdatedAllowed = Object.keys(data).every((k)=>Allowed_Updates.includes(k));
+    // if(!isUpdatedAllowed){
+    //   throw new Error("update not allowed");
+
+     
+    // }
+   
+    if(data?.skills.length > 10){
+
+      throw new Error("skills not more than 10");
+    }
     const user = await User.findByIdAndUpdate({_id:userId},data,{
       returnDocument:"after",
       runValidators:"true",
+      
+
+
     });
-    console.log(user)
+ 
     res.send("user update succesfully");
 
   }catch(err){
-    res.status(400).send("something went wrong");
+    res.status(400).send(err.message);
   }
  })
 
- app.patch("/user",async(req,res)=>{
-  const emailId = req.body.emailId;
-  const data = req.body;
-  try{
-    const user = await User.findByIdAndUpdate(emailId,data);
-    console.log(user)
-    res.send("user update succesfully");
 
-  }catch(err){
-    res.status(400).send("something went wrong");
-  }
- })
 
  connectDB()
  .then(()=>{
