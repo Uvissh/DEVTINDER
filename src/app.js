@@ -70,11 +70,11 @@ app.post("/login",async(req,res)=>{
 
     if(!user){
       throw new Error("email is not valid");
-    }
-    const isPasswordValid = await bcrypt.compare(password,user.password);//compare the password
+    } 
+    const isPasswordValid = await user.validateUser(password);//offload the bcrypt into userSchema
     if(isPasswordValid){
 
-   const token = await  jwt.sign({_id:user._id},"VishalDEv@12345",{expiresIn:"1d"});//hidden userid and the secertcode
+   const token = await  user.getJWT();//hidden userid and the secertcode//offload the jwt sign method into the userschema it is the rightway to write code
    console.log(token);
 
 
