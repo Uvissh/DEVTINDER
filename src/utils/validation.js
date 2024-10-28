@@ -15,4 +15,15 @@ const validator = require("validator");
         throw new Error("Please enter the valid email")
     }
  };
- module.exports={validateSignupData};
+ const validateEditProfileData =(req)=>{
+    const allowedEditField =
+    ["firstName",
+     "lastName",
+     "about",
+     "gender",
+     "skills"
+    ];
+    const isEditAllowed = Object.keys(req.body).every((field)=>allowedEditField.includes(field));
+    return isEditAllowed;
+ }
+ module.exports={validateSignupData, validateEditProfileData};

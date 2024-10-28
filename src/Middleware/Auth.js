@@ -5,7 +5,7 @@
    
    const  userAuth = async(req,res,next)=>{
     try{
-    const cookies = req.cookies;
+    const cookies = req.cookies;//all cookies that we have while login the user
     const{token} = cookies;
     if(!token){
         throw new Error("invalid token");
