@@ -46,7 +46,7 @@ profileAuth.get("/profile/view",userAuth, async(req,res)=>{
     res.json({message:`${loggedInUser.firstName},your profile update succesfully`,
       data:loggedInUser,
       })
-      loggedInUser.save();
+     await loggedInUser.save();
 
 
       
