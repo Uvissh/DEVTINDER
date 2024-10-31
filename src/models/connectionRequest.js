@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
  const connectionRequestSchema = new mongoose.Schema({
     fromUserId:{
         type:mongoose.Schema.Types.ObjectId,
-        required:true
+        required:true,
+        ref:"User",//make the connection  with User
     },
     toUserId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
+        ref:"User",
     },
     status:{
         type:String,
@@ -25,6 +27,10 @@ const mongoose = require("mongoose");
  {
     timestamps:true,
  })
+
+ connectionRequestSchema.index({fromUserId:1,
+    toUserId:1
+ });//compound indexing
 
  connectionRequestSchema.pre("save",function(next){//it is called just before the save//it is a  middleware
 

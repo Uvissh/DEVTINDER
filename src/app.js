@@ -17,10 +17,11 @@
  const authRouter = require("./routes/auth");
  const profileAuth = require("./routes/profile");
  const requestRouter = require("./routes/request");
+ const userRouter = require("./routes/user");
  app.use("/",authRouter);
  app.use("/",profileAuth);
  app.use("/",requestRouter);
-
+app.use("/",userRouter);
 
 
 
