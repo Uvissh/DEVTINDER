@@ -2,6 +2,8 @@
  const userRouter = express.Router();
  const {userAuth} = require("../Middleware/Auth");
 const ConnectionRequestModel = require("../models/connectionRequest");
+const User = require("../models/user");
+
 const USER_SAFE_DATA ="firstName  lastName  photoUrl age about skills"
 
 
@@ -56,6 +58,44 @@ userRouter.get("/user/connection",userAuth,async(req,res)=>{
      res.json({message:data});
         
 
+    }catch(err){
+        res.send(err.message);
+    }
+})
+
+
+userRouter.get("/user/feed",userAuth,async(req,res)=>{
+    try{
+        const loggedInUser = req.user;
+        const page = parseInt(req.query.page) || 1;//take the page no from the query
+        let  limit = parseInt(req.query.limit) || 10;//take the limit from query
+        const skip = (page-1)*limit;//skip the page means if 3 then 2*10=20 skip 20 and start from the 21
+        limit > 50? 50:limit;//modified the limit
+        
+        const connectionRequest = await ConnectionRequestModel.find({
+
+            $or:[
+                {
+                    fromUserId:loggedInUser._id,
+
+                },
+                {toUserId:loggedInUser._id}
+            ]
+        }).select("fromUserId   toUserId")
+        const hideUserFromFeed =new Set();//the set ds only take the  unique items;
+        connectionRequest.forEach((req)=>{
+            hideUserFromFeed.add(req.fromUserId.toString());
+            hideUserFromFeed.add(req.toUserId.toString());
+        })
+      
+        console.log(hideUserFromFeed);
+        const users = await User.find({
+            $and:[
+                {_id:{$nin:Array.from(hideUserFromFeed)}},
+                {_id:{$ne:loggedInUser._id}}
+            ]
+        }).select(USER_SAFE_DATA).skip(skip).limit(limit)
+        res.json({data:users});
     }catch(err){
         res.send(err.message);
     }
