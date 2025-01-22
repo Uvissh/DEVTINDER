@@ -1,7 +1,7 @@
  const express = require("express");
   const connectDB=require("./config/Database") 
  const app = express();//new application of express
- const User = require("./models/user");
+//  const User = require("./models/user");
 //  const {validateSignupData} = require("./utils/validation");
  const bcrypt = require("bcrypt");
  const  cookieParser = require("cookie-parser");
