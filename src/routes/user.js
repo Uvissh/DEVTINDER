@@ -55,7 +55,8 @@ userRouter.get("/user/connection",userAuth,async(req,res)=>{
         return null; // Return null if either is not defined
     }).filter(id => id !== null); // Filter out null values
     
-     res.json({message:data});
+     res.json({message:"connection are",
+        data});
         
 
     }catch(err){
@@ -82,20 +83,21 @@ userRouter.get("/user/feed",userAuth,async(req,res)=>{
                 {toUserId:loggedInUser._id}
             ]
         }).select("fromUserId   toUserId")
-        const hideUserFromFeed =new Set();//the set ds only take the  unique items;
+        const hideUserFromFeed = new Set();//the set ds only take the  unique items;
         connectionRequest.forEach((req)=>{
-            hideUserFromFeed.add(req.fromUserId.toString());
-            hideUserFromFeed.add(req.toUserId.toString());
+            hideUserFromFeed.add(req.fromUserId.toString());//add the fromUserId to the  hideUser
+            hideUserFromFeed.add(req.toUserId.toString());//add the hideuser to toUserId
         })
       
         console.log(hideUserFromFeed);
         const users = await User.find({
             $and:[
                 {_id:{$nin:Array.from(hideUserFromFeed)}},
-                {_id:{$ne:loggedInUser._id}}
+                {_id:{$ne:loggedInUser._id}}//this is you who is logged who also not see our profile while opening
             ]
-        }).select(USER_SAFE_DATA).skip(skip).limit(limit)
-        res.json({data:users});
+        }).select(USER_SAFE_DATA).skip(skip).limit(limit)//only select the data which is not in the connection and how to skip and limit the  query
+        res.json({ message:"fetching the cards",
+            data:users});
     }catch(err){
         res.send(err.message);
     }

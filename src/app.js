@@ -7,12 +7,22 @@
  const  cookieParser = require("cookie-parser");
  const jwt = require("jsonwebtoken");
  const {userAuth} =require("./Middleware/Auth");
+ const cors = require("cors");
 
 
 
  app.use(express.json());  //we use middleware to convert json into js object
  app.use(cookieParser());//we use middleware  to read the token
+ 
+
+ app.use(cors({
+  origin: 'http://localhost:5173',
+   // Update to match your frontend URL
   
+  
+ 
+  credentials: true,
+}));
 
  const authRouter = require("./routes/auth");
  const profileAuth = require("./routes/profile");
@@ -22,6 +32,7 @@
  app.use("/",profileAuth);
  app.use("/",requestRouter);
 app.use("/",userRouter);
+
 
 
 

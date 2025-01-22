@@ -8,7 +8,7 @@
     const cookies = req.cookies;//all cookies that we have while login the user
     const{token} = cookies;
     if(!token){
-        throw new Error("invalid token");
+       return res.status(401).send("Please Login");
         
     }
     const isTokenValid = await jwt.verify(token,"VishalDEv@12345");

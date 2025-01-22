@@ -48,11 +48,18 @@ authRouter.post("/signup",async(req,res)=>{
   
   
   
+  const savedUser = await user.save();
+  
+   const token = await  user.getJWT();//hidden userid and the secertcode//offload the jwt sign method into the userschema it is the rightway to write code
+  
+
+
+   res.cookie("token", token, {
+    expires: new Date(Date.now() + 8 * 3600000),
+  });
   
   
-  
-    await user.save();
-    res.send("User Added successfully");
+  res.json({message:"User Added successfully!",data:savedUser});
   
    }catch(err){
   
@@ -83,7 +90,7 @@ authRouter.post("/login",async(req,res)=>{
   
        res.cookie("token",token);//express give you the cookie//wrap the token inside the cookie
   
-        res.send("login successful");
+        res.json({message:"login successful",data:user});
       }
       else{
         throw new  Error("invalid password");

@@ -6,6 +6,8 @@ const{validateEditProfileData} = require("../utils/validation");
 
 
 
+
+
 profileAuth.get("/profile/view",userAuth, async(req,res)=>{
     try{
   //   const cookies = req.cookies;//extract all the cookies
@@ -41,18 +43,20 @@ profileAuth.get("/profile/view",userAuth, async(req,res)=>{
     }
     const loggedInUser= req.user;
     console.log(loggedInUser);
+   
     //for edit the loggedInUser
     Object.keys(req.body).forEach((key)=>(loggedInUser[key]=req.body[key]));//update the profile of user by copything all req.body keys into loggedInuser
     res.json({message:`${loggedInUser.firstName},your profile update succesfully`,
       data:loggedInUser,
       })
-     await loggedInUser.save();
+      await loggedInUser.save();
+     
 
 
       
 
     }catch(err){
-      res.status(400).send(err.message);
+      res.status(500).json({ message: "An error occurred while updating your profile" });
     }
 
   })

@@ -21,7 +21,10 @@ const validator = require("validator");
      "lastName",
      "about",
      "gender",
-     "skills"
+     "skills",
+     "age",
+     "photoUrl"
+     
     ];
     const isEditAllowed = Object.keys(req.body).every((field)=>allowedEditField.includes(field));
     return isEditAllowed;
