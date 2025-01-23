@@ -1,13 +1,16 @@
  const express = require("express");
   const connectDB=require("./config/Database") 
- const app = express();//new application of express
+ const app = express();
+ const  cookieParser = require("cookie-parser");
+ const cors = require("cors");
+ //new application of express
 //  const User = require("./models/user");
 //  const {validateSignupData} = require("./utils/validation");
- const bcrypt = require("bcrypt");
- const  cookieParser = require("cookie-parser");
- const jwt = require("jsonwebtoken");
+//  const bcrypt = require("bcrypt");
+
+//  const jwt = require("jsonwebtoken");
 //  const {userAuth} =require("./Middleware/Auth");
- const cors = require("cors");
+
 
 
 
