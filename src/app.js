@@ -3,6 +3,10 @@
  const app = express();
  const  cookieParser = require("cookie-parser");
  const cors = require("cors");
+ require('dotenv').config();
+
+ 
+
  //new application of express
 //  const User = require("./models/user");
 //  const {validateSignupData} = require("./utils/validation");
@@ -57,7 +61,7 @@ app.use("/",userRouter);
  connectDB()
  .then(()=>{
   console.log("Database  connection established")
-  app.listen(7777,()=>{
+  app.listen(process.env.Port,()=>{
     console.log("server is successfully running in the port");
     
  });

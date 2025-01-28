@@ -11,7 +11,7 @@
        return res.status(401).send("Please Login");
         
     }
-    const isTokenValid = await jwt.verify(token,"VishalDEv@12345");
+    const isTokenValid = await jwt.verify(token, process.env.JWT_SECRET);
     const{_id} = isTokenValid;
      const user = await User.findById(_id);
      if(!user){
