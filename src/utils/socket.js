@@ -36,19 +36,7 @@ socket.on("sendMessage",async({firstName,userId,targetUserId,text})=>{
     console.log(firstName + " "+text );
     //check if the userId and tergetUseriD are friends
 
- const  doChat =  ConnectionRequestModel.findOne({
 
-    $or:[
-        
-        {fromUserId:userId,toUserId:targetUserId},
-        {status:"accepted"}
-
-
-    ],
- });
- if(!doChat){
-    return res.status(400).send({message:"you are not in the connection"})//if there is existing reqest then sends the existing request messsage
-  }
 
 
     //save messages to the database
