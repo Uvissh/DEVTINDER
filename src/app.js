@@ -3,7 +3,9 @@
  const app = express();
  const  cookieParser = require("cookie-parser");
  const cors = require("cors");
+ const http = require("http");
  require('dotenv').config();
+
 
  
 
@@ -35,10 +37,20 @@
  const profileAuth = require("./routes/profile");
  const requestRouter = require("./routes/request");
  const userRouter = require("./routes/user");
+ const  chatRouter = require("./routes/chat");
+const intializeSocket = require("./utils/socket");
  app.use("/",authRouter);
  app.use("/",profileAuth);
  app.use("/",requestRouter);
 app.use("/",userRouter);
+app.use("/",chatRouter);
+
+
+
+
+
+const server = http.createServer(app);
+intializeSocket(server);
 
 
 
@@ -61,7 +73,7 @@ app.use("/",userRouter);
  connectDB()
  .then(()=>{
   console.log("Database  connection established")
-  app.listen(process.env.Port,()=>{
+  server.listen(process.env.Port,()=>{
     console.log("server is successfully running in the port");
     
  });
