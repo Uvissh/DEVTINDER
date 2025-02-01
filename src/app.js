@@ -37,8 +37,9 @@
  const profileAuth = require("./routes/profile");
  const requestRouter = require("./routes/request");
  const userRouter = require("./routes/user");
+ const intializeSocket = require("./utils/socket");
  const  chatRouter = require("./routes/chat");
-const intializeSocket = require("./utils/socket");
+
  app.use("/",authRouter);
  app.use("/",profileAuth);
  app.use("/",requestRouter);
